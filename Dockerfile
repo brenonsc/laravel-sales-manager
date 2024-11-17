@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html
-COPY .env /var/www/html/.env
 
 WORKDIR /var/www/html
 
@@ -21,4 +20,6 @@ RUN composer install
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN a2enmod rewrite
 
-EXPOSE 80
+EXPOSE 8000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
