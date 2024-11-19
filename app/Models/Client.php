@@ -12,4 +12,9 @@ class Client extends Model
         'email',
         'phone',
     ];
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
 }

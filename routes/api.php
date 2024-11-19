@@ -18,7 +18,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 Route::group(['middleware' => 'api'], function (){
     Route::get('clients', 'App\Http\Controllers\ClientController@index');
     Route::post('clients', 'App\Http\Controllers\ClientController@create');
-    //Route::get('clients/{id}', 'App\Http\Controllers\ClientController@show');
     Route::put('clients/{id}', 'App\Http\Controllers\ClientController@update');
     Route::delete('clients/{id}', 'App\Http\Controllers\ClientController@destroy');
 });
