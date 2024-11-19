@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
 {
@@ -51,9 +53,13 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'sku' => 'required|string|max:255|unique:products,sku',
                 'price' => 'required|numeric',
-                'quantity' => 'required|integer',
+                'quantity' => 'required|integer|min:0',
                 'is_active' => 'nullable|boolean',
             ]);
+
+            if (isset($validatedData['quantity']) && $validatedData['quantity'] === 0) {
+                $validatedData['is_active'] = false;
+            }
 
             $product = Product::create($validatedData);
 
@@ -85,9 +91,13 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'sku' => 'sometimes|required|string|max:255|unique:products,sku,' . $product->id,
                 'price' => 'sometimes|required|numeric',
-                'quantity' => 'sometimes|required|integer',
+                'quantity' => 'sometimes|required|integer|min:0',
                 'is_active' => 'nullable|boolean',
             ]);
+
+            if (isset($validatedData['quantity']) && $validatedData['quantity'] === 0) {
+                $validatedData['is_active'] = false;
+            }
 
             $product->update($validatedData);
 
