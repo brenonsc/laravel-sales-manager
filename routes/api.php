@@ -21,6 +21,8 @@ Route::group(['middleware' => 'api'], function () {
 
 Route::group(['middleware' => 'api', 'prefix' => 'clients'], function (){
     Route::get('', [ClientController::class, 'index']);
+    Route::get('{id}/sales', [ClientController::class, 'show']);
+    Route::get('{id}/sales/{year}/{month}', [ClientController::class, 'getSalesByMonthAndYear']);
     Route::post('', [ClientController::class, 'store']);
     Route::put('{id}', [ClientController::class, 'update']);
     Route::delete('{id}', [ClientController::class, 'delete']);

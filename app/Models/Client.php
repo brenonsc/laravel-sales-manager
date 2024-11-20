@@ -17,4 +17,9 @@ class Client extends Model
     {
         return $this->hasOne(Address::class);
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

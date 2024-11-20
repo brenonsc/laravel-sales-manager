@@ -20,8 +20,69 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::with('address')->orderBy('id')->get();
+        $clients = Client::orderBy('id')->get();
         return response()->json($clients);
+    }
+
+    /**
+     * Show client sales by date (descending)
+     */
+    public function show($id)
+    {
+        try {
+            $client = Client::findOrFail($id);
+
+            $sales = $client->sales()
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Sales retrieved successfully.',
+                'data' => $sales,
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Client not found.',
+            ], 404);
+        }
+    }
+
+    /**
+     * Show client sales filtered by month and year
+     */
+    public function getSalesByMonthAndYear($id, $year, $month)
+    {
+        if (!is_numeric($year) || $year < 1900 || !is_numeric($month) || $month < 1 || $month > 12) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid month or year provided.',
+            ], 400);
+        }
+
+        try {
+            $client = Client::findOrFail($id);
+
+            $sales = $client->sales()
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Sales retrieved successfully.',
+                'data' => $sales,
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Client not found.',
+            ], 404);
+        }
     }
 
     /**
