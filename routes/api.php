@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -31,4 +32,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'products'], function (){
     Route::post('', [ProductController::class, 'store']);
     Route::put('{id}', [ProductController::class, 'update']);
     Route::delete('{id}', [ProductController::class, 'delete']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'sales'], function (){
+    Route::get('', [SaleController::class, 'index']);
+    Route::post('', [SaleController::class, 'store']);
 });

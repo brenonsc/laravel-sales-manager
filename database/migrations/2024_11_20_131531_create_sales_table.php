@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('street', 255);
-            $table->string('number', 10);
-            $table->string('complement', 255)->nullable();
-            $table->string('neighbourhood', 255);
-            $table->string('city', 255);
-            $table->string('state', 2);
-            $table->string('postal_code', 10);
             $table->unsignedBigInteger('client_id');
+            $table->foreignId('product_id')->constrained('products');
+            $table->integer('quantity');
+            $table->decimal('unit_price', 8, 2);
+            $table->decimal('total_price', 8, 2);
             $table->timestamps();
 
             $table->foreign('client_id')
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('sales');
     }
-};
+}
