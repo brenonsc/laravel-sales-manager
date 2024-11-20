@@ -692,7 +692,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             },
@@ -780,7 +780,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -823,7 +823,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             },
@@ -924,7 +924,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             },
@@ -975,7 +975,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             }
@@ -1007,7 +1007,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             },
@@ -1082,7 +1082,7 @@
                 },
                 "security": [
                     {
-                        "apiAuth": []
+                        "bearerAuth": []
                     }
                 ]
             }

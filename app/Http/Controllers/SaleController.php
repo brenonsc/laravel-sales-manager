@@ -37,7 +37,7 @@ class SaleController extends Controller
      *     path="/api/sales",
      *     summary="Get a list of all sales",
      *     tags={"Sales"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="List of sales retrieved successfully",
@@ -63,7 +63,7 @@ class SaleController extends Controller
      *     path="/api/sales",
      *     summary="Store a new sale",
      *     tags={"Sales"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(

@@ -39,7 +39,7 @@ class ProductController extends Controller
      *     summary="List active products",
      *     description="Retrieve a list of active products ordered by name.",
      *     tags={"Products"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="List of active products",
@@ -66,7 +66,7 @@ class ProductController extends Controller
      *     summary="Get product by ID",
      *     description="Retrieve a specific product by its ID.",
      *     tags={"Products"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -113,7 +113,7 @@ class ProductController extends Controller
      *     summary="Create a new product",
      *     description="Create a new product with validation and optional deactivation if quantity is zero.",
      *     tags={"Products"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -184,7 +184,7 @@ class ProductController extends Controller
      *     summary="Update a product",
      *     description="Update the specified product by its ID.",
      *     tags={"Products"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -273,7 +273,7 @@ class ProductController extends Controller
      *     summary="Soft delete a product",
      *     description="Mark a product as inactive (soft delete).",
      *     tags={"Products"},
-     *     security={{"apiAuth": {}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
