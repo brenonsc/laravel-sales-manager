@@ -404,10 +404,58 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Sale"
-                                    }
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sales retrieved successfully."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Client ID",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Client name",
+                                                    "type": "string"
+                                                },
+                                                "cpf": {
+                                                    "description": "Client CPF",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "Client email",
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "description": "Client phone",
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "description": "Creation timestamp",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Update timestamp",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "sales": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Sale"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -468,10 +516,58 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Sale"
-                                    }
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sales retrieved successfully."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "Client ID",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Client name",
+                                                    "type": "string"
+                                                },
+                                                "cpf": {
+                                                    "description": "Client CPF",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "Client email",
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "description": "Client phone",
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "description": "Creation timestamp",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Update timestamp",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "sales": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Sale"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }

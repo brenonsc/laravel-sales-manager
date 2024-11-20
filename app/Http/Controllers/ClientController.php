@@ -86,8 +86,20 @@ class ClientController extends Controller
      *         response=200,
      *         description="Client sales retrieved successfully",
      *     @OA\JsonContent(
-     *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Sale")
+     *         @OA\Property(property="status", type="string", example="success"),
+     *         @OA\Property(property="message", type="string", example="Sales retrieved successfully."),
+     *         @OA\Property(property="data", type="object",
+     *             @OA\Property(property="id", type="integer", description="Client ID"),
+     *             @OA\Property(property="name", type="string", description="Client name"),
+     *             @OA\Property(property="cpf", type="string", description="Client CPF"),
+     *             @OA\Property(property="email", type="string", description="Client email"),
+     *             @OA\Property(property="phone", type="string", description="Client phone"),
+     *             @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time", description="Update timestamp"),
+     *                 @OA\Property(property="sales", type="array",
+     *                 @OA\Items(ref="#/components/schemas/Sale")
+     *            )
+     *        )
      *     )
      *     ),
      *     @OA\Response(
@@ -105,16 +117,13 @@ class ClientController extends Controller
         try {
             $client = Client::findOrFail($id);
 
-            $sales = $client->sales()
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $client->sales = $client->sales->sortByDesc('created_at')->values();
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Sales retrieved successfully.',
-                'data' => $sales,
+                'data' => $client,
             ], 200);
-
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'status' => 'error',
@@ -154,9 +163,21 @@ class ClientController extends Controller
      *         response=200,
      *         description="Client sales retrieved successfully",
      *     @OA\JsonContent(
-     *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Sale")
-     *     )
+     *          @OA\Property(property="status", type="string", example="success"),
+     *          @OA\Property(property="message", type="string", example="Sales retrieved successfully."),
+     *          @OA\Property(property="data", type="object",
+     *              @OA\Property(property="id", type="integer", description="Client ID"),
+     *              @OA\Property(property="name", type="string", description="Client name"),
+     *              @OA\Property(property="cpf", type="string", description="Client CPF"),
+     *              @OA\Property(property="email", type="string", description="Client email"),
+     *              @OA\Property(property="phone", type="string", description="Client phone"),
+     *              @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+     *              @OA\Property(property="updated_at", type="string", format="date-time", description="Update timestamp"),
+     *                  @OA\Property(property="sales", type="array",
+     *                  @OA\Items(ref="#/components/schemas/Sale")
+     *             )
+     *         )
+     *      )
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -184,7 +205,7 @@ class ClientController extends Controller
         try {
             $client = Client::findOrFail($id);
 
-            $sales = $client->sales()
+            $client->sales = $client->sales()
                 ->whereYear('created_at', $year)
                 ->whereMonth('created_at', $month)
                 ->orderBy('created_at', 'desc')
@@ -193,7 +214,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Sales retrieved successfully.',
-                'data' => $sales,
+                'data' => $client,
             ], 200);
 
         } catch (ModelNotFoundException $e) {
