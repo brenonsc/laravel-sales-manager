@@ -7,6 +7,24 @@ use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @OA\Schema(
+ *     schema="Sale",
+ *     type="object",
+ *     title="Sale",
+ *     description="Sale model",
+ *     properties={
+ *         @OA\Property(property="id", type="integer", description="Sale ID"),
+ *         @OA\Property(property="client_id", type="integer", description="Client ID"),
+ *         @OA\Property(property="product_id", type="integer", description="Product ID"),
+ *         @OA\Property(property="quantity", type="integer", description="Quantity of products sold"),
+ *         @OA\Property(property="unit_price", type="number", format="float", description="Unit price of the product"),
+ *         @OA\Property(property="total_price", type="number", format="float", description="Total price of the sale"),
+ *         @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+ *         @OA\Property(property="updated_at", type="string", format="date-time", description="Update timestamp")
+ *     }
+ * )
+ */
 class SaleController extends Controller
 {
     public function __construct()
@@ -15,7 +33,24 @@ class SaleController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/sales",
+     *     summary="Get a list of all sales",
+     *     tags={"Sales"},
+     *     security={{"apiAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of sales retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Sale")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function index()
     {
@@ -24,7 +59,42 @@ class SaleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/sales",
+     *     summary="Store a new sale",
+     *     tags={"Sales"},
+     *     security={{"apiAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"client_id", "product_id", "quantity"},
+     *             @OA\Property(property="client_id", type="integer", example=1),
+     *             @OA\Property(property="product_id", type="integer", example=1),
+     *             @OA\Property(property="quantity", type="integer", example=2)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Sale executed successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Sale executed successfully"),
+     *             @OA\Property(property="data", ref="#/components/schemas/Sale")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request - Product is not available or not enough stock"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -63,7 +133,10 @@ class SaleController extends Controller
             }
             $product->save();
 
-            return response()->json($sale, 201);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Sale executed successfully',
+                'data' => $sale], 201);
         } catch (ValidationException $e) {
             return response()->json([
                 'error' => 'Validation Error',

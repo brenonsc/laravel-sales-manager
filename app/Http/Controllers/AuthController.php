@@ -21,9 +21,32 @@ class AuthController extends Controller
     }
 
     /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post (
+     *     path="/api/signup",
+     *     tags={"Auth"},
+     *     summary="Register a User",
+     *     @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *     required={"name","email","password", "password_confirmation"},
+     *     @OA\Property(property="name", type="string", example="John Doe"),
+     *     @OA\Property(property="email", type="string", example="johndoe@email.com"),
+     *     @OA\Property(property="password", type="string", example="password123"),
+     *     @OA\Property(property="password_confirmation", type="string", example="password123"),
+     *     )
+     *    ),
+     *     @OA\Response(
+     *     response=200,
+     *     description="User registered successfully",
+     *     ),
+     *     @OA\Response(
+     *     response=422,
+     *     description="Validation Error",
+     *     ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Server Error",
+     *     ))
      */
     public function signup(Request $request)
     {
@@ -55,9 +78,31 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post (
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Authenticate User and return a token",
+     *     @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *     required={"email","password"},
+     *     @OA\Property(property="email", type="string", example="johndoe@email.com"),
+     *     @OA\Property(property="password", type="string", example="password123"),
+     *     )
+     *    ),
+     *     @OA\Response(
+     *     response=200,
+     *     description="Authentication successful",
+     *     @OA\JsonContent(
+     *         @OA\Property(property="access_token", type="string", example="token"),
+     *         @OA\Property(property="token_type", type="string", example="bearer"),
+     *         @OA\Property(property="expires_in", type="integer", example=3600),
+     *     )
+     *     ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Server Error",
+     *     ))
      */
     public function login(Request $request)
     {
@@ -74,16 +119,40 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get (
+     *     path="/api/me",
+     *     tags={"Auth"},
+     *     summary="Get the authenticated User",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *     response=200,
+     *     description="User data retrieved successfully",
+     *     @OA\JsonContent(
+     *     @OA\Property(property="success", type="boolean", example=true),
+     *     @OA\Property(property="user", type="object",
+     *         @OA\Property(property="id", type="integer", example=1),
+     *         @OA\Property(property="name", type="string", example="John Doe"),
+     *         @OA\Property(property="email", type="string", example="johndoe@email.com"),
+     *         @OA\Property(property="created_at", type="string", format="date-time", example="2024-11-20T10:00:00.000000Z"),
+     *         @OA\Property(property="updated_at", type="string", format="date-time", example="2024-11-20T10:00:00.000000Z")
+     *     )
+     *     )
+     *     ),
+     *     @OA\Response(
+     *     response=401,
+     *     description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Server Error",
+     *     ))
      */
     public function me()
     {
         try {
             return response()->json([
                 'success' => true,
-                'user' => auth()->user()
+                'user' => auth()->user()->makeHidden('email_verified_at')
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -94,9 +163,27 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post (
+     *     path="/api/logout",
+     *     tags={"Auth"},
+     *     summary="Log the user out (Invalidate the token)",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *     response=200,
+     *     description="Successfully logged out",
+     *     @OA\JsonContent(
+     *         @OA\Property(property="success", type="boolean", example=true),
+     *         @OA\Property(property="message", type="string", example="Successfully logged out")
+     *     )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Server Error",
+     *     ))
      */
     public function logout()
     {
@@ -111,23 +198,6 @@ class AuthController extends Controller
             return response()->json([
                 'error' => 'Server Error',
                 'message' => 'Failed to log out.'
-            ], 500);
-        }
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        try {
-            return $this->respondWithToken(auth()->refresh());
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Server Error',
-                'message' => 'Unable to refresh token.'
             ], 500);
         }
     }
