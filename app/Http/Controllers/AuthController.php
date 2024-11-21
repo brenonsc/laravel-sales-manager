@@ -38,6 +38,15 @@ class AuthController extends Controller
      *     @OA\Response(
      *     response=200,
      *     description="User registered successfully",
+     *     @OA\JsonContent(
+     *     @OA\Property(property="success", type="boolean", example=true),
+     *     @OA\Property(property="message", type="string", example="User registered successfully"),
+     *     @OA\Property(property="data", type="object",
+     *         @OA\Property(property="access_token", type="string", example="token"),
+     *         @OA\Property(property="token_type", type="string", example="bearer"),
+     *         @OA\Property(property="expires_in", type="integer", example=3600),
+     *     ),
+     *     ),
      *     ),
      *     @OA\Response(
      *     response=422,
@@ -63,7 +72,11 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return $this->login($request);
+            return response()->json([
+                'success' => true,
+                'message' => 'User registered successfully',
+                'data' => $this->login($request)->original
+            ], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'error' => 'Validation Error',
@@ -94,10 +107,14 @@ class AuthController extends Controller
      *     response=200,
      *     description="Authentication successful",
      *     @OA\JsonContent(
-     *         @OA\Property(property="access_token", type="string", example="token"),
-     *         @OA\Property(property="token_type", type="string", example="bearer"),
-     *         @OA\Property(property="expires_in", type="integer", example=3600),
+     *         @OA\Property(property="success", type="boolean", example=true),
+     *         @OA\Property(property="message", type="string", example="User logged in successfully"),
+     *         @OA\Property(property="data", type="object",
+     *             @OA\Property(property="access_token", type="string", example="token"),
+     *             @OA\Property(property="token_type", type="string", example="bearer"),
+     *             @OA\Property(property="expires_in", type="integer", example=3600),
      *     )
+     *     ),
      *     ),
      *     @OA\Response(
      *     response=500,
@@ -115,7 +132,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged in successfully',
+            'data' => $this->respondWithToken($token)->original
+        ], 200);
     }
 
     /**
@@ -189,6 +210,7 @@ class AuthController extends Controller
     {
         try {
             auth()->logout();
+            auth()->invalidate(true);
 
             return response()->json([
                 'success' => true,
@@ -197,7 +219,8 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Server Error',
-                'message' => 'Failed to log out.'
+                'message' => 'Failed to log out.',
+                'exception' => $e->getMessage() // Para ajudar no diagnóstico
             ], 500);
         }
     }

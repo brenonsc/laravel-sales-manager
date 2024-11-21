@@ -54,7 +54,41 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User registered successfully"
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string",
+                                                    "example": "token"
+                                                },
+                                                "token_type": {
+                                                    "type": "string",
+                                                    "example": "bearer"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer",
+                                                    "example": 3600
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Validation Error"
@@ -103,17 +137,30 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "access_token": {
-                                            "type": "string",
-                                            "example": "token"
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
                                         },
-                                        "token_type": {
+                                        "message": {
                                             "type": "string",
-                                            "example": "bearer"
+                                            "example": "User logged in successfully"
                                         },
-                                        "expires_in": {
-                                            "type": "integer",
-                                            "example": 3600
+                                        "data": {
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string",
+                                                    "example": "token"
+                                                },
+                                                "token_type": {
+                                                    "type": "string",
+                                                    "example": "bearer"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer",
+                                                    "example": 3600
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
