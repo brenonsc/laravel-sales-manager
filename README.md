@@ -8,7 +8,7 @@ O **Laravel Sales Manager** é uma aplicação backend desenvolvida em Laravel c
 <br>
 <br>
 
-## Tecnologias utilizadas 🔨
+## Tecnologias utilizadas&nbsp; 🔨
 <div>
     <img align='center' height='70' width='70' title='PHP' alt='php' src='https://cdn-icons-png.flaticon.com/512/5968/5968332.png' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img align='center' height='50' width='50' title='Laravel' alt='laravel' src='https://cdn.worldvectorlogo.com/logos/laravel-3.svg' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -101,7 +101,26 @@ Os endpoints estão documentados em **Swagger** e podem ser acessados via:
 
 <br>
 
-## Licença
+## Testes&nbsp; :man_scientist:
+
+Esta aplicação possui **testes unitários** implementados para todos os **controllers**, garantindo a funcionalidade e a estabilidade da aplicação.
+
+#### Executando os Testes
+
+Para rodar os testes, siga os passos abaixo:
+
+1. Execute as migrações no ambiente de testes:
+   ```bash
+   docker compose exec app php artisan migrate --env=testing
+   ```
+
+2. Execute os testes:
+   ```bash
+   docker compose exec app php artisan test
+   ```
+<br>
+
+## Licença&nbsp; :clipboard:
 
 Este software está licenciado sob a [Licença MIT](https://github.com/brenonsc/laravel-sales-manager/blob/main/LICENSE).
 <br>
