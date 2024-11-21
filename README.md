@@ -1,66 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Sales Manager 💰📊
+![License](https://badgen.net/badge/License/MIT/purple?icon=)
+![PHP](https://badgen.net/badge/icon/v8.3/blue?icon=php&label)
+![Laravel](https://badgen.net/badge/Laravel/v11/green?icon=)
+![Docker](https://badgen.net/badge/icon/Available?icon=docker&label)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+O **Laravel Sales Manager** é uma aplicação backend desenvolvida em Laravel com integração via Docker e documentação de endpoints em Swagger. O sistema gerencia usuários, clientes, endereços, produtos e vendas, com autenticação JWT para segurança e rastreamento eficiente.
+<br>
+<br>
 
-## About Laravel
+## Tecnologias utilizadas 🔨
+<div>
+    <img align='center' height='70' width='70' title='PHP' alt='php' src='https://cdn-icons-png.flaticon.com/512/5968/5968332.png' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img align='center' height='50' width='50' title='Laravel' alt='laravel' src='https://cdn.worldvectorlogo.com/logos/laravel-3.svg' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img align='center' height='48' width='50' title='JsonWebToken' alt='jsonwebtoken' src='https://images.ctfassets.net/kbkgmx9upatd/6E4gdxqqmafg9Usjz9etTU/bc93ad8e3cea217c3de390239ff34c8c/jwt-hero.png' /> &nbsp;&nbsp;&nbsp;&nbsp;
+    <img align='center' height='50' width='50' title='MySQL' alt='mysql' src='https://cdn-icons-png.flaticon.com/512/5968/5968313.png' /> &nbsp;
+    <img align='center' height='62' width='72' title='Swagger' alt='swagger' src='https://github.com/bush1D3v/tsbank_api/assets/133554156/6739401f-d03b-47f8-b01f-88da2a9075d1' /> &nbsp;
+    <img align='center' height='55' width='55' title='Docker' alt='docker' src='https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png' />
+</div>
+<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos&nbsp; ☑️
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. 🐳 **Docker**: Caso não tenha instalado, baixe no [site oficial do Docker](https://www.docker.com/products/docker-desktop).
+2. 🐱 **Git**: Para clonar o repositório.
+<br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Passos para Instalação&nbsp; 🖥️
 
-## Learning Laravel
+1. **Clone o Repositório**  
+   Abra o terminal, navegue até a pasta desejada e execute:  
+   ```bash
+   git clone https://github.com/brenonsc/laravel-sales-manager.git
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Entre na Pasta do Projeto**  
+   ```bash
+   cd laravel-sales-manager
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Inicie o Projeto**  
+   Execute o comando para configurar o ambiente e subir os containers Docker:  
+   ```bash
+   cp .env.example .env && docker compose up --build
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **(Opcional)** **_Gere uma nova chave JWT_**  
+   > **⚠️ Importante:** Este passo garante segurança no processo de autenticação.  
+   Abra uma nova aba no terminal e execute o comando após os containers estarem ativos:  
+   ```bash
+   docker compose exec app php artisan jwt:secret
+   ```
+<br>
 
-## Laravel Sponsors
+## Endpoints Documentados&nbsp; 🟢
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Os endpoints estão documentados em **Swagger** e podem ser acessados via:  
+- [http://localhost:8000](http://localhost:8000)  
+- [http://localhost:8000/api/docs](http://localhost:8000/api/docs)
+<br>
 
-### Premium Partners
+## Principais Endpoints&nbsp; ▶️
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### **Autenticação**&nbsp; 🔐
 
-## Contributing
+**Controller:** `AuthController`  
+- **POST /login**: Autentica o usuário e retorna um token JWT.  
+- **POST /signup**: Registra um novo usuário.  
+- **POST /logout**: Encerra a sessão autenticada.  
+- **GET /me**: Retorna os dados do usuário autenticado.  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### **Clientes**&nbsp; :busts_in_silhouette:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Controller:** `ClientController`  
+- **GET /clients**: Lista todos os clientes.  
+- **GET /clients/{id}**: Exibe detalhes de um cliente específico.  
+- **POST /clients**: Cria um novo cliente com seus endereços.  
+- **PUT /clients/{id}**: Atualiza informações do cliente e seu endereço.  
+- **DELETE /clients/{id}**: Deleta logicamente um cliente.  
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### **Produtos**&nbsp; 📦
 
-## License
+**Controller:** `ProductController`  
+- **GET /products**: Lista produtos ativos.  
+- **GET /products/{id}**: Exibe detalhes de um produto.  
+- **POST /products**: Cria um novo produto.  
+- **PUT /products/{id}**: Atualiza informações de um produto.  
+- **DELETE /products/{id}**: Marca um produto como inativo.  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### **Vendas**&nbsp; :chart_with_upwards_trend:
+
+**Controller:** `SaleController`  
+- **GET /sales**: Lista todas as vendas.  
+- **POST /sales**: Registra uma nova venda.  
+
+<br>
+
+## Licença
+
+Este software está licenciado sob a [Licença MIT](https://github.com/brenonsc/laravel-sales-manager/blob/main/LICENSE).
+<br>
